@@ -27,11 +27,13 @@
         vm.onFilterChange = onFilterChange;
         vm.updateOutput = updateOutput;
 
+        activate();
+
         ////////////////
 
-        $scope.$on('handleBroadcast', function (events, args) {
-            vm.updateOutput(args);
-        });
+        function activate() {
+            DataService.registerOutput(vm);
+        }
 
         function sendCommand() {
             if (!vm.command) {
@@ -107,7 +109,7 @@
             var logLength = vm.log.length;
             for (var i = 0; i < logLength; i++) {
                 if (vm.filterOutput && vm.log[i].match(regex)) continue;
-                output += vm.log[i] + "\n";
+                output += vm.log[i];
             }
 
             vm.commandOutput = output;
